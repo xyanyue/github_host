@@ -54,7 +54,11 @@ const END: &str = "# =========Github End==========";
 fn main() {
     let ips = get_host_ip();
     if ips.len() > 2 {
-        write_hosts("/etc/hosts", ips);
+        if cfg!(target_os = "windows") {
+            write_hosts(r"C:\windows\system32\drivers\etc", ips);
+        } else {
+            write_hosts(r"/etc/hosts", ips);
+        }
     }
 }
 
